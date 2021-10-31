@@ -1,10 +1,15 @@
 import './App.css';
-import SchoolIcon from '@mui/icons-material/School';
+import Header from './components/Header.js';
+import Main from './components/Main.js';
+import Footer from './components/Footer.js'
+import CourseList from './components/CourseList.js';
 
 function App() {
   return (
     <div className="App" style={{ display: 'flex' }}>
-      <SchoolIcon /> Grading System App (Edit Here)
+      <Header />
+      <CourseList />
+      <Footer />
     </div>
   );
 }
