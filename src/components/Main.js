@@ -1,8 +1,10 @@
-import React from 'react';
-import './css/Main.css'
+import React, { useState } from 'react';
+import styles from './css/Main.css'
+import { Link } from "react-router-dom";
 
+function Main() {
+    const [user, setUser] = useState(null);
 
-export default function main() {
     return (
         <div className="main">
             <div className="container">
@@ -30,7 +32,7 @@ export default function main() {
                                             Forget Password
                                         </div>
                                         <div className="col-lg-6 login-btm login-button">
-                                            <button type="submit" className="btn btn-outline-primary">LOGIN</button>
+                                            <Link style={{ textDecoration: "none ", color: "white", border: '1px solid white', padding: '5px' }} to='/MenuInstructor'>Main</Link>
                                         </div>
                                     </div>
                                 </form>
@@ -43,3 +45,5 @@ export default function main() {
         </div>
     )
 }
+
+export default Main;

@@ -1,0 +1,13 @@
+.menu {
+    /* background-color: aqua; */
+    margin-top: 3vh;
+    margin-left: 30vw;
+    margin-right: 30vw;
+    height: 60vh;
+    width: 40vw;
+    margin-bottom:20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: space-between;
+}

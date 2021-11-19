@@ -1,0 +1,9 @@
+.table_area{
+    display: flex;
+}
+
+.table{
+    margin-right: 2vw;
+    margin-top: 1vh;
+    text-align: center;
+}
