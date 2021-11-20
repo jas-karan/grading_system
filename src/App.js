@@ -17,10 +17,11 @@ function App() {
         <Routes>
           <Route path='/' element={<Main />} />
           <Route path="/MenuInstructor" element={<MenuInstructor />} />
-          <Route path="/CourseList" element={<CourseList />} />
-          <Route path="/EvaluationScheme" element={<EvaluationScheme />} />
-          <Route path="/MarkEntryInternal" element={<MarkEntryInternal />} />
-          <Route path="/MarkEntryEndterm" element={<MarkEntryEndterm />} />
+          <Route path="/MenuInstructor/CourseListInternal" element={<CourseList exam="Internal" />} />
+          <Route path="/MenuInstructor/CourseListEndterm" element={<CourseList exam="Endterm" />} />
+          <Route path="/MenuInstructor/EvaluationScheme" element={<EvaluationScheme />} />
+          <Route path="/MenuInstructor/CourseList/MarkEntryInternal" element={<MarkEntryInternal />} />
+          <Route path="/MenuInstructor/CourseList/MarkEntryEndterm" element={<MarkEntryEndterm />} />
         </Routes>
       </BrowserRouter>
     </div>
