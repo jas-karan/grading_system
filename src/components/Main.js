@@ -11,7 +11,7 @@ function Main() {
                     <div className="col-lg-3 col-md-2"></div>
                     <div className="col-lg-6 col-md-8 login-box">
                         <div className="col-lg-12 login-title">
-                            Login
+                            LOGIN
                         </div>
 
                         <div className="col-lg-12 login-form">
@@ -22,8 +22,8 @@ function Main() {
                                         <input type="text" className="form-control input_text" />
                                     </div>
                                     <div className="form-group">
-                                        <label className="form-control-label input_password">PASSWORD</label>
-                                        <input type="password" className="form-control" />
+                                        <label className="form-control-label">PASSWORD</label>
+                                        <input type="password" className="form-control input_text" />
                                     </div>
 
                                     <div className="col-lg-12 loginbttm">
@@ -31,7 +31,7 @@ function Main() {
                                             Forget Password
                                         </div>
                                         <div className="col-lg-6 login-btm login-button">
-                                            <Link style={{ textDecoration: "none ", color: "white", border: '1px solid white', padding: '5px' }} to='/MenuInstructor'>Log In</Link>
+                                            <Link style={{ textDecoration: "none ", color: "white", border: '1px solid #1A2226', padding: '5px 5px', fontWeight: "bold" }} to='/MenuInstructor'>SIGN IN</Link>
                                         </div>
                                     </div>
                                 </form>

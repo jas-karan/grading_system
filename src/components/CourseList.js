@@ -10,8 +10,9 @@ import Paper from '@mui/material/Paper';
 import Button from "@mui/material/Button";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
+import { Link } from "react-router-dom";
 
-function CourseList() {
+function CourseList({ exam }) {
 
     const course = [{ 'CID': 'CS221', 'Name': 'Computer Networks' }, { 'CID': 'CS012', 'Name': 'Operating Systems' }]
 
@@ -47,7 +48,7 @@ function CourseList() {
                                             >
                                                 <TableCell>{c.CID}&nbsp;</TableCell>
                                                 <TableCell>{c.Name}</TableCell>
-                                                <TableCell><Button variant='contained'>Select</Button></TableCell>
+                                                <TableCell><Button variant='contained'><Link style={{ textDecoration: "none ", color: "white" }} to={(exam === "Internal") ? "/MenuInstructor/CourseListInternal/MarkEntryInternal" : "/MenuInstructor/CourseListEndterm/MarkEntryEndterm"}>Select</Link></Button></TableCell>
                                             </TableRow>
 
                                         ))

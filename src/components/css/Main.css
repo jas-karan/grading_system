@@ -16,7 +16,7 @@
     margin-top: 15px;
     text-align: center;
     font-size: 40px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     margin-top: 15px;
     font-weight: bold;
     color: #ECF0F5;
@@ -65,7 +65,7 @@
     border-bottom: 2px solid #0DB8DE;
     outline: 0;
     background-color: #1A2226;
-    color: #ECF0F5;
+    color: #447dc2;
 }
 
 input:focus {
@@ -79,7 +79,7 @@ label {
 
 .form-control-label {
     font-size: 10px;
-    color: #6C6C6C;
+    color: #4cd2e4;
     font-weight: bold;
     letter-spacing: 1px;
 }
@@ -111,7 +111,7 @@ label {
 .login-text {
     text-align: left;
     padding-left: 0px;
-    color: #FF0000;
+    color: #0DB8DE;
 }
 
 .loginbttm {

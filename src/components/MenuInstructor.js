@@ -11,8 +11,8 @@ function MenuInstructor() {
             <Header />
             <div className="menu">
                 <Button variant='contained'><Link style={{ 'color': 'white', 'textDecoration': 'none' }} to="/MenuInstructor/EvaluationScheme">Evaluation Scheme</Link></Button>
-                <Button variant='contained'><Link style={{ 'color': 'white', 'textDecoration': 'none' }} to="/MenuInstructor/CourseList">Mark Entry Internal</Link></Button>
-                <Button variant='contained'><Link style={{ 'color': 'white', 'textDecoration': 'none' }} to="/MenuInstructor/CourseList">Mark Entry Endtem</Link></Button>
+                <Button variant='contained'><Link style={{ 'color': 'white', 'textDecoration': 'none' }} to="/MenuInstructor/CourseListInternal">Mark Entry Internal</Link></Button>
+                <Button variant='contained'><Link style={{ 'color': 'white', 'textDecoration': 'none' }} to="/MenuInstructor/CourseListEndterm">Mark Entry Endtem</Link></Button>
                 <Button variant='contained'>BTP Mark Entry</Button>
                 <Button variant='contained'>Extra Curriculum Grade Entry</Button>
                 <Button variant='contained' className="last-button">Zero Credit Project Grade Entry</Button>

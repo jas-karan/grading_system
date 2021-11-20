@@ -91,7 +91,7 @@ function MarkEntryEndterm() {
                                 </Table>
                             </TableContainer>
 
-                            <button style={{ 'border': '1px solid black', 'marginTop': '1vw', 'backgroundColor': 'orange', 'fontWeight': 'bold' }}>Save Manual Grade Range</button>
+                            <button className="submit-btn">Save Manual Grade Range</button>
 
                         </div>
                     </div>

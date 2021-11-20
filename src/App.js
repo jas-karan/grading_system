@@ -20,8 +20,8 @@ function App() {
           <Route path="/MenuInstructor/CourseListInternal" element={<CourseList exam="Internal" />} />
           <Route path="/MenuInstructor/CourseListEndterm" element={<CourseList exam="Endterm" />} />
           <Route path="/MenuInstructor/EvaluationScheme" element={<EvaluationScheme />} />
-          <Route path="/MenuInstructor/CourseList/MarkEntryInternal" element={<MarkEntryInternal />} />
-          <Route path="/MenuInstructor/CourseList/MarkEntryEndterm" element={<MarkEntryEndterm />} />
+          <Route path="/MenuInstructor/CourseListInternal/MarkEntryInternal" element={<MarkEntryInternal />} />
+          <Route path="/MenuInstructor/CourseListEndterm/MarkEntryEndterm" element={<MarkEntryEndterm />} />
         </Routes>
       </BrowserRouter>
     </div>

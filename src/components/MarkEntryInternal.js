@@ -12,7 +12,7 @@ import Footer from "./Footer.js";
 
 function MarkEntryInternal() {
     const students = [{ 'Roll Number': '19UCS262', 'Name': 'Jaskaran Singh', 'ev1': '9', 'ev2': '8', 'midsem': '23' },
-    { 'Roll Number': '19UCS259', 'Name': 'Apurv mundhra', 'ev1': '10', 'ev2': '7', 'midsem': '29' }];
+    { 'Roll Number': '19UCS247', 'Name': 'Apurv mundhra', 'ev1': '10', 'ev2': '7', 'midsem': '29' }];
 
     let ser = 1;
     return (

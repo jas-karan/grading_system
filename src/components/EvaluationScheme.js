@@ -57,7 +57,7 @@ function EvaluationScheme() {
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
-                                    <TableRow>
+                                    <TableRow className="table-heading">
                                         <TableCell>Exam Name&nbsp;</TableCell>
                                         <TableCell>Minimum Marks&nbsp;</TableCell>
                                         <TableCell>Maximum Marks&nbsp;</TableCell>
