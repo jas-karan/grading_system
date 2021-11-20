@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "./css/MarkEntryEndterm.css";
+import "./css/MarkEntryEndterm.css";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -97,6 +97,7 @@ function MarkEntryEndterm() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

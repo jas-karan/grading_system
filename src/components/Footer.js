@@ -4,7 +4,7 @@ import './css/Footer.css'
 function Footer() {
     return (
         <div className="footer">
-            <footer className="site-footer">
+            <footer className="site-footer" style={{ backgroundColor: "black" }}>
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-12 col-md-6">

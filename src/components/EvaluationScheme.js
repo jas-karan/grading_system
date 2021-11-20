@@ -26,6 +26,10 @@ function EvaluationScheme() {
         rows > 0 ? setRows(rows - 1) : setRows(rows);
     }
 
+    const submit = () => {
+        alert("Evaluation Scheme Submitted")
+    }
+
     return (
         <div>
             <Header />
@@ -78,16 +82,21 @@ function EvaluationScheme() {
                             </Table>
                         </TableContainer>
                     </div>
-                    <IconButton>
-                        <AddCircleIcon sx={{ color: 'green' }} onClick={addRow} />
-                    </IconButton>
+                    <div style={{ display: 'flex', 'justify-content': 'center' }}>
+                        <div className="icons">
+                            <IconButton>
+                                <AddCircleIcon sx={{ color: 'green', fontSize: '32px' }} onClick={addRow} />
+                            </IconButton>
 
-                    <IconButton>
-                        <IndeterminateCheckBoxIcon sx={{ color: 'red' }} onClick={deleteRow} />
-                    </IconButton>
+                            <IconButton>
+                                <IndeterminateCheckBoxIcon sx={{ color: 'red', fontSize: '32px' }} onClick={deleteRow} />
+                            </IconButton>
+                        </div>
+                        <button onClick={submit} style={{ 'border': '1px solid #2e7d32', 'marginLeft': '90px', 'height': '5vh', backgroundColor: '#2e7d32', color: 'white' }}>Save Scheme</button>
+                    </div>
                 </div>
             </div>
-
+            <Footer />
         </div>
     )
 }

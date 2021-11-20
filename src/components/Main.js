@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import styles from './css/Main.css'
+import React from 'react';
+import './css/Main.css'
 import { Link } from "react-router-dom";
 
 function Main() {
-    const [user, setUser] = useState(null);
 
     return (
         <div className="main">
@@ -20,10 +19,10 @@ function Main() {
                                 <form>
                                     <div className="form-group">
                                         <label className="form-control-label">USERNAME</label>
-                                        <input type="text" className="form-control" />
+                                        <input type="text" className="form-control input_text" />
                                     </div>
                                     <div className="form-group">
-                                        <label className="form-control-label">PASSWORD</label>
+                                        <label className="form-control-label input_password">PASSWORD</label>
                                         <input type="password" className="form-control" />
                                     </div>
 
@@ -32,7 +31,7 @@ function Main() {
                                             Forget Password
                                         </div>
                                         <div className="col-lg-6 login-btm login-button">
-                                            <Link style={{ textDecoration: "none ", color: "white", border: '1px solid white', padding: '5px' }} to='/MenuInstructor'>Main</Link>
+                                            <Link style={{ textDecoration: "none ", color: "white", border: '1px solid white', padding: '5px' }} to='/MenuInstructor'>Log In</Link>
                                         </div>
                                     </div>
                                 </form>

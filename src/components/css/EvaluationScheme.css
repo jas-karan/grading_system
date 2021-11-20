@@ -13,4 +13,16 @@
 .main{
     width: 80vw;
     margin: 0 10vw;
+    min-height: 400px;
+    margin-bottom: 190px;
+    
 }
+
+.icons{
+    display: flex;
+    justify-content: center;
+}
+
+.ant-message {
+    top:20px;
+  }

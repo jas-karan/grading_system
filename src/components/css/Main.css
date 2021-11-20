@@ -27,7 +27,7 @@
     text-align: left;
 }
 
-input[type=text] {
+.input_text {
     background-color: #1A2226;
     border: none;
     border-bottom: 2px solid #0DB8DE;
@@ -40,7 +40,7 @@ input[type=text] {
     color: #ECF0F5;
 }
 
-input[type=password] {
+.input_password {
     background-color: #1A2226;
     border: none;
     border-bottom: 2px solid #0DB8DE;
