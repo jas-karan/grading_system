@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 function Main() {
 
+
     return (
         <div className="main">
             <div className="container">
@@ -31,7 +32,7 @@ function Main() {
                                             Forget Password
                                         </div>
                                         <div className="col-lg-6 login-btm login-button">
-                                            <Link style={{ textDecoration: "none ", color: "white", border: '1px solid #1A2226', padding: '5px 5px', fontWeight: "bold" }} to='/MenuInstructor'>SIGN IN</Link>
+                                            <Link style={{ textDecoration: "none ", color: "white", border: '1px solid #1A2226', padding: '5px 5px', fontWeight: "bold" }} to='/menuInstructor'>SIGN IN</Link>
                                         </div>
                                     </div>
                                 </form>

@@ -10,12 +10,12 @@ function MenuInstructor() {
         <div>
             <Header />
             <div className="menu">
-                <Button variant='contained'><Link style={{ 'color': 'white', 'textDecoration': 'none' }} to="/MenuInstructor/EvaluationScheme">Evaluation Scheme</Link></Button>
-                <Button variant='contained'><Link style={{ 'color': 'white', 'textDecoration': 'none' }} to="/MenuInstructor/CourseListInternal">Mark Entry Internal</Link></Button>
-                <Button variant='contained'><Link style={{ 'color': 'white', 'textDecoration': 'none' }} to="/MenuInstructor/CourseListEndterm">Mark Entry Endtem</Link></Button>
-                <Button variant='contained'>BTP Mark Entry</Button>
-                <Button variant='contained'>Extra Curriculum Grade Entry</Button>
-                <Button variant='contained' className="last-button">Zero Credit Project Grade Entry</Button>
+                <Link to="/MenuInstructor/CourseListEvaluationScheme"><Button className="links-btn" variant='contained'>Evaluation Scheme</Button></Link>
+                <Link to="/MenuInstructor/CourseListInternal"><Button className="links-btn" variant='contained'>Mark Entry Internal</Button></Link>
+                <Link to="/MenuInstructor/CourseListEndterm"><Button className="links-btn" variant='contained'>Mark Entry Endtem</Button></Link>
+                <Link to="/MenuInstructor/EvaluationScheme"><Button className="links-btn" variant='contained'>BTP Mark Entry</Button></Link>
+                <Link to="/MenuInstructor/EvaluationScheme"><Button className="links-btn" variant='contained'>Extra Curriculum Grade Entry</Button></Link>
+                <Link to="/MenuInstructor/EvaluationScheme"><Button className="links-btn" variant='contained'>Zero Credit Project Grade Entry</Button></Link>
             </div>
             <Footer />
         </div>

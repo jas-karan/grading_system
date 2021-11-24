@@ -12,7 +12,7 @@ import Header from "./Header.js";
 import Footer from "./Footer.js";
 import { Link } from "react-router-dom";
 
-function CourseList({ exam }) {
+function CourseList({ list, page }) {
 
     const course = [{ 'CID': 'CS221', 'Name': 'Computer Networks' }, { 'CID': 'CS012', 'Name': 'Operating Systems' }]
 
@@ -20,7 +20,7 @@ function CourseList({ exam }) {
         <div>
             <Header />
             <div className="courseList">
-                <h4 className="heading">Mark Entry - Internal</h4>
+                <h4 className="heading">{list === "EvaluationScheme" ? "Set" : "Mark Entry - "} {list}</h4>
                 <div className="main">
                     <div className="select">
                         <label htmlFor="session">Session:&nbsp;&nbsp;</label>
@@ -48,9 +48,8 @@ function CourseList({ exam }) {
                                             >
                                                 <TableCell>{c.CID}&nbsp;</TableCell>
                                                 <TableCell>{c.Name}</TableCell>
-                                                <TableCell><Button variant='contained'><Link style={{ textDecoration: "none ", color: "white" }} to={(exam === "Internal") ? "/MenuInstructor/CourseListInternal/MarkEntryInternal" : "/MenuInstructor/CourseListEndterm/MarkEntryEndterm"}>Select</Link></Button></TableCell>
+                                                <TableCell><Button variant='contained'><Link style={{ textDecoration: "none ", color: "white" }} to={`/MenuInstructor/CourseList${list}/${page}`}>Select</Link></Button></TableCell>
                                             </TableRow>
-
                                         ))
                                     }
                                 </TableBody>

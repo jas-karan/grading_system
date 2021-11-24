@@ -13,7 +13,10 @@ import Footer from "./Footer.js";
 function MarkEntryEndterm() {
     const auto = [{ 'Grade': 'A', 'min': '45', 'max': '60', 'points': '10' }, { 'Grade': 'A', 'min': '45', 'max': '60', 'points': '10' }, { 'Grade': 'A', 'min': '45', 'max': '60', 'points': '10' }];
     const manual = [{ 'Grade': 'A', 'min': '45', 'max': '60', 'points': '10' }, { 'Grade': 'A', 'min': '45', 'max': '60', 'points': '10' }, { 'Grade': 'A', 'min': '45', 'max': '60', 'points': '10' }];
+    const students = [{ 'Roll Number': '19UCS262', 'Name': 'Jaskaran Singh', 'ev1': '9', 'ev2': '8', 'midsem': '23' },
+    { 'Roll Number': '19UCS247', 'Name': 'Apurv mundhra', 'ev1': '10', 'ev2': '7', 'midsem': '29' }];
 
+    let ser = 1;
     return (
         <div><Header />
             <div className="mark_entry_endterm">
@@ -94,6 +97,41 @@ function MarkEntryEndterm() {
                             <button className="submit-btn">Save Manual Grade Range</button>
 
                         </div>
+
+                    </div>
+                    <div className="table">
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Serial No.&nbsp;</TableCell>
+                                        {
+                                            Object.keys(students[0]).map((i) => (
+                                                <TableCell>{i}&nbsp;</TableCell>
+                                            ))
+                                        }
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {
+                                        students.map((s) => (
+                                            <TableRow
+                                                key={s}
+                                            >
+                                                <TableCell>{ser++}</TableCell>
+                                                {
+                                                    Object.values(s).map((i, ind) => (
+                                                        ind >= 2 ? <TableCell><input type="number" step="0.01" placeholder={i} /></TableCell> : <TableCell>{i}</TableCell>
+                                                    ))
+
+                                                }
+                                            </TableRow>
+
+                                        ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </div>
                 </div>
             </div>
