@@ -60,7 +60,7 @@ function MarkEntryInternal() {
                                                 <TableCell>{ser++}</TableCell>
                                                 {
                                                     Object.values(s).map((i, ind) => (
-                                                        ind >= 2 ? <TableCell><input type="number" step="0.01" placeholder={i} /></TableCell> : <TableCell>{i}</TableCell>
+                                                        ind >= 2 ? <TableCell><input type="number" step="1" placeholder={i} /></TableCell> : <TableCell>{i}</TableCell>
                                                     ))
 
                                                 }

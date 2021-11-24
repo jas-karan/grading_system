@@ -3,7 +3,19 @@
     margin-bottom: 40px;
     display:flex;
     flex-direction: column;
+    position: absolute;
+    top: 7%;
 }
+
+.outer{
+    background: url("../LNMIIT.jpg"); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+
 .login-box {
     margin-top: 15vh;
     height: auto;
