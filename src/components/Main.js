@@ -8,7 +8,7 @@ function Main() {
     return (
         <div>
             <div className="outer"></div>
-            <div className="main">
+            <div className="main__login">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-3 col-md-2"></div>

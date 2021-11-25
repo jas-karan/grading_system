@@ -30,8 +30,8 @@ function MarkEntryEndterm() {
                         <h5>Course: &nbsp;</h5>
                         <h6 className="fixed">Computer Networks</h6>
                     </div>
+                    <h5>Import Student Marks: &nbsp;</h5>
                     <div className="select">
-                        <h5>Import Student Marks: &nbsp;</h5>
                         <input type="file" id="myfile" name="myfile"></input>
                     </div>
                     <div className="select">
