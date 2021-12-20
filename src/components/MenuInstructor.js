@@ -4,8 +4,13 @@ import "./css/MenuInstructor.css"
 import Header from "./Header.js";
 import Footer from "./Footer.js";
 import { Link } from "react-router-dom";
+import userContext from "../context/userContext";
 
 function MenuInstructor() {
+    const { teacherId } = React.useContext(userContext);
+    React.useEffect(() => {
+        console.log(teacherId);
+    })
     return (
         <div>
             <Header />

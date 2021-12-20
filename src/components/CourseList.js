@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './css/CourseList.css';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,7 +14,23 @@ import { Link } from "react-router-dom";
 
 function CourseList({ list, page }) {
 
-    const course = [{ 'CID': 'CS221', 'Name': 'Computer Networks' }, { 'CID': 'CS012', 'Name': 'Operating Systems' }]
+    const [course, setCourse] = useState([]);
+
+    //make a api call and get course list of loggedin teacher
+    useEffect(() => {
+        // async function fetchData() {
+        //     try {
+        //         const response = await fetch(
+        //             ""
+        //         );
+        //         const json = await response.json();
+        //         setCourse(json.data.children.map(it => it.data));
+        //     } catch (e) {
+        //         console.error(e);
+        //     }
+        // };
+        // fetchData();
+    }, []);
 
     return (
         <div>
