@@ -16,16 +16,16 @@ function Main() {
                 const resp = await fetch('https://ams-web-app.herokuapp.com/api/login', {
                     method: 'POST',
                     headers: {
-                        'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
+                    body: {
                         "username": "rahulagarwal",
                         "password": "rahulagarwal"
-                    })
+                    },
+                    cache: 'no-cache',
                 })
-
-                console.log(resp);
+                const data = await resp.json();
+                console.log(data);
                 alert("rahul")
                 history('/menuInstructor');
             }
