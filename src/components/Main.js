@@ -11,19 +11,17 @@ function Main() {
 
     //make a api call and redirect to menuInstructor
     const login = async () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                "username": "rahulagarwal",
+                "password": "rahulagarwal"
+            })
+        };
         if (verifyDetails()) {
             try {
-                const resp = await fetch('https://ams-web-app.herokuapp.com/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: {
-                        "username": "rahulagarwal",
-                        "password": "rahulagarwal"
-                    },
-                    cache: 'no-cache',
-                })
+                const resp = await fetch('https://ams-web-app.herokuapp.com/api/login', requestOptions);
                 const data = await resp.json();
                 console.log(data);
                 alert("rahul")
