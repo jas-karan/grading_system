@@ -13,9 +13,11 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import Header from "./Header.js";
 import Footer from "./Footer.js";
+import { useLocation } from "react-router-dom";
+import axios from 'axios';
 
 function EvaluationScheme() {
-    const [rows, setRows] = useState(2);
+    const [rows, setRows] = useState(0);
 
     const addRow = () => {
         setRows(rows + 1);
@@ -30,6 +32,28 @@ function EvaluationScheme() {
         alert("Evaluation Scheme Submitted")
     }
 
+    const search = useLocation().search;
+    const course = new URLSearchParams(search).get('course');
+    const session = new URLSearchParams(search).get('session');
+    const id = new URLSearchParams(search).get('id');
+
+    const [evalu, setEvalu] = React.useState([]);
+
+    React.useEffect(() => {
+        const makeCall = async () => {
+
+            const options = {
+                url: `http://localhost:3006/api/teacher/courses/${id}/EvalutaionScheme`,
+                method: 'GET'
+            }
+            let resp = await axios(options);
+            console.log(resp.data.data);
+            resp = resp.data.data;
+            setEvalu(resp);
+        }
+        makeCall();
+    }, [id])
+
     return (
         <div>
             <Header />
@@ -37,18 +61,12 @@ function EvaluationScheme() {
                 <h4 className="heading-evaluation">Update Evaluation Scheme</h4>
                 <div className="main">
                     <div className="select">
-                        <label htmlFor="session">Session:&nbsp;&nbsp;</label>
-                        <select name="session" id="session">
-                            <option value="Odd Sem 2020-2021 I">Odd Sem 2020-2021 I</option>
-                            <option value="Even Sem 2020-2021 II">Even Sem 2020-2021 II</option>
-                        </select>
+                        <h5>Session:&nbsp; </h5>
+                        <h6 className="fixed">{session}</h6>
                     </div>
                     <div className="select">
-                        <label htmlFor="Course">Course:&nbsp;&nbsp;</label>
-                        <select name="Course" id="Course">
-                            <option value="Computer Security">Computer Security</option>
-                            <option value="Web Security">Web Security</option>
-                        </select>
+                        <h5>Course: &nbsp;</h5>
+                        <h6 className="fixed">{course}</h6>
                     </div>
                     <Button color="success" variant="contained">Mark Scheme for Individual Exam Component</Button>
 
@@ -58,24 +76,38 @@ function EvaluationScheme() {
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow className="table-heading">
+                                        <TableCell>Exam Id&nbsp;</TableCell>
                                         <TableCell>Exam Name&nbsp;</TableCell>
-                                        <TableCell>Minimum Marks&nbsp;</TableCell>
+
                                         <TableCell>Maximum Marks&nbsp;</TableCell>
                                         <TableCell>Weightage</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {
-                                        [...Array(rows)].map((i) => (
+                                        evalu.map((e) => (
                                             <TableRow
-                                                key={i}
+                                                key={e.ExamName}
+                                            >
+                                                <TableCell><input placeholder={e.ExamId}></input></TableCell>
+                                                <TableCell><input placeholder={e.ExamName}></input></TableCell>
+
+                                                <TableCell><input placeholder={e.TotalMarks}></input></TableCell>
+                                                <TableCell><input placeholder={e.Weightage}></input></TableCell>
+                                            </TableRow>
+
+                                        ))
+                                    }
+                                    {
+                                        [...Array(rows)].map((e) => (
+                                            <TableRow
+                                                key={e}
                                             >
                                                 <TableCell><input></input></TableCell>
                                                 <TableCell><input></input></TableCell>
                                                 <TableCell><input></input></TableCell>
                                                 <TableCell><input></input></TableCell>
                                             </TableRow>
-
                                         ))
                                     }
                                 </TableBody>

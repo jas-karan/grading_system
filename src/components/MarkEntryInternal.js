@@ -9,10 +9,15 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Header from "./Header.js";
 import Footer from "./Footer.js";
+import { useLocation } from "react-router-dom";
 
 function MarkEntryInternal() {
     const students = [{ 'Roll Number': '19UCS262', 'Name': 'Jaskaran Singh', 'ev1': '9', 'ev2': '8', 'midsem': '23' },
     { 'Roll Number': '19UCS247', 'Name': 'Apurv mundhra', 'ev1': '10', 'ev2': '7', 'midsem': '29' }];
+
+    const search = useLocation().search;
+    const course = new URLSearchParams(search).get('course');
+    const session = new URLSearchParams(search).get('session');
 
     let ser = 1;
     return (
@@ -23,11 +28,11 @@ function MarkEntryInternal() {
                 <div className="main">
                     <div className="select">
                         <h5>Session:&nbsp; </h5>
-                        <h6 className="fixed">Odd Sem 2020-2021 II</h6>
+                        <h6 className="fixed">{session}</h6>
                     </div>
                     <div className="select">
                         <h5>Course: &nbsp;</h5>
-                        <h6 className="fixed">Computer Networks</h6>
+                        <h6 className="fixed">{course}</h6>
                     </div>
                     <div className="select">
                         <h5>Import Student Marks: &nbsp;</h5>
