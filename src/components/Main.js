@@ -17,9 +17,9 @@ function Main() {
         if (verifyDetails()) {
             alert(username + "\n" + password);
             const options = {
-                url: 'http://localhost:3006/api/login',
+                url: 'http://localhost:3000/api/login',
                 method: 'POST',
-                withCeredentials: true,
+                withCredentials: true,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

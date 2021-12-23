@@ -23,8 +23,9 @@ function CourseList({ list, page }) {
     useEffect(() => {
         const makeCall = async () => {
             const options = {
-                url: 'http://localhost:3006/api/teacher/courses',
-                method: 'GET'
+                url: 'http://localhost:3000/api/teacher/courses?courseType=NC',
+                method: 'GET',
+                withCredentials: true,
             }
             const resp = await axios(options);
             let unique_s = [];

@@ -20,16 +20,13 @@ function EvaluationScheme() {
     const [rows, setRows] = useState(0);
 
     const addRow = () => {
-        setRows(rows + 1);
+        if (rows === 0)
+            setRows(rows + 1);
     }
 
 
     const deleteRow = () => {
-        rows > 0 ? setRows(rows - 1) : setRows(rows);
-    }
-
-    const submit = () => {
-        alert("Evaluation Scheme Submitted")
+        rows === 1 ? setRows(rows - 1) : setRows(rows);
     }
 
     const search = useLocation().search;
@@ -39,12 +36,25 @@ function EvaluationScheme() {
 
     const [evalu, setEvalu] = React.useState([]);
 
+    const makeCallAgain = async () => {
+        const options = {
+            url: `http://localhost:3000/api/teacher/courses/${id}/EvalutaionScheme`,
+            method: 'GET',
+            withCredentials: true
+        }
+        let resp = await axios(options);
+        resp = resp.data.data;
+        setEvalu([]);
+        setEvalu(resp);
+    }
+
     React.useEffect(() => {
         const makeCall = async () => {
 
             const options = {
-                url: `http://localhost:3006/api/teacher/courses/${id}/EvalutaionScheme`,
-                method: 'GET'
+                url: `http://localhost:3000/api/teacher/courses/${id}/EvalutaionScheme`,
+                method: 'GET',
+                withCredentials: true
             }
             let resp = await axios(options);
             console.log(resp.data.data);
@@ -53,6 +63,75 @@ function EvaluationScheme() {
         }
         makeCall();
     }, [id])
+
+    const updateScheme = async (Examid) => {
+        let prev = {};
+        for (let i = 0; i < evalu.length; i++) {
+            if (evalu[i].ExamId === Examid) {
+                prev = evalu[i];
+                break;
+            }
+        }
+
+        let name_ = document.getElementById(`${Examid}EN`).value;
+        let TM_ = document.getElementById(`${Examid}TM`).value;
+        let W_ = document.getElementById(`${Examid}W`).value
+        if (!name_) {
+            name_ = prev.ExamName;
+        }
+        if (!TM_) TM_ = prev.TotalMarks;
+        if (!W_) W_ = prev.Weightage;
+
+        const options = {
+            url: `http://localhost:3000/api/teacher/courses/${id}/EvalutaionScheme`,
+            method: 'PUT',
+            withCredentials: true,
+            data: {
+                "ExamName": name_,
+                "MaximumMarks": TM_,
+                "Weightage": W_,
+                "ExamID": Examid
+            }
+        }
+        let resp = await axios(options);
+        if (resp.data.status === 'success') alert("Component Updated!");
+        makeCallAgain();
+    }
+
+    const AddScheme = async (Examid) => {
+        let name_ = document.getElementById(`${Examid}EN`).value;
+        let TM_ = document.getElementById(`${Examid}TM`).value;
+        let W_ = document.getElementById(`${Examid}W`).value
+        alert(name_ + " " + TM_ + " " + W_)
+        const options = {
+            url: `http://localhost:3000/api/teacher/courses/${id}/EvalutaionScheme`,
+            method: 'POST',
+            withCredentials: true,
+            data: {
+                "ExamName": name_,
+                "MaximumMarks": TM_,
+                "Weightage": W_,
+            }
+        }
+        let resp = await axios(options);
+        if (resp.data.status === 'success') alert("Component Added!");
+        deleteRow();
+        makeCallAgain();
+    }
+
+    const deleteScheme = async (Examid) => {
+        const options = {
+            url: `http://localhost:3000/api/teacher/courses/${id}/EvalutaionScheme`,
+            method: 'Delete',
+            withCredentials: true,
+            data: {
+                "ExamId": Examid
+            }
+        }
+        let resp = await axios(options);
+        if (resp.data.status === 'success') alert("Component Deleted Successfully!");
+        makeCallAgain();
+    }
 
     return (
         <div>
@@ -80,20 +159,25 @@ function EvaluationScheme() {
                                         <TableCell>Exam Name&nbsp;</TableCell>
 
                                         <TableCell>Maximum Marks&nbsp;</TableCell>
-                                        <TableCell>Weightage</TableCell>
+                                        <TableCell>Weightage&nbsp;</TableCell>
+                                        <TableCell>Action-1&nbsp;</TableCell>
+                                        <TableCell>Action-2&nbsp;</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {
                                         evalu.map((e) => (
                                             <TableRow
-                                                key={e.ExamName}
+                                                key={e.ExamId}
                                             >
-                                                <TableCell><input placeholder={e.ExamId}></input></TableCell>
-                                                <TableCell><input placeholder={e.ExamName}></input></TableCell>
+                                                <TableCell><input value={e.ExamId} readOnly></input></TableCell>
+                                                <TableCell><input placeholder={e.ExamName} id={`${e.ExamId}EN`}></input></TableCell>
 
-                                                <TableCell><input placeholder={e.TotalMarks}></input></TableCell>
-                                                <TableCell><input placeholder={e.Weightage}></input></TableCell>
+                                                <TableCell><input placeholder={e.TotalMarks} id={`${e.ExamId}TM`}></input></TableCell>
+                                                <TableCell><input placeholder={e.Weightage} id={`${e.ExamId}W`}></input></TableCell>
+                                                <TableCell><Button variant="outlined" onClick={() => updateScheme(e.ExamId)}>Save</Button></TableCell>
+                                                <TableCell><Button variant="outlined" onClick={() => deleteScheme(e.ExamId)}>Delete</Button></TableCell>
+
                                             </TableRow>
 
                                         ))
@@ -103,10 +187,11 @@ function EvaluationScheme() {
                                             <TableRow
                                                 key={e}
                                             >
-                                                <TableCell><input></input></TableCell>
-                                                <TableCell><input></input></TableCell>
-                                                <TableCell><input></input></TableCell>
-                                                <TableCell><input></input></TableCell>
+                                                <TableCell></TableCell>
+                                                <TableCell><input id={`${e}EN`}></input></TableCell>
+                                                <TableCell><input id={`${e}TM`}></input></TableCell>
+                                                <TableCell><input id={`${e}W`}></input></TableCell>
+                                                <TableCell><Button variant="outlined" onClick={() => AddScheme(e)}>Add</Button></TableCell>
                                             </TableRow>
                                         ))
                                     }
@@ -124,12 +209,12 @@ function EvaluationScheme() {
                                 <IndeterminateCheckBoxIcon sx={{ color: 'red', fontSize: '32px' }} onClick={deleteRow} />
                             </IconButton>
                         </div>
-                        <button onClick={submit} style={{ 'border': '1px solid #2e7d32', 'marginLeft': '90px', 'height': '5vh', backgroundColor: '#2e7d32', color: 'white' }}>Save Scheme</button>
+
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
             <Footer />
-        </div>
+        </div >
     )
 }
 

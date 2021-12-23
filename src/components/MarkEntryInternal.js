@@ -34,14 +34,14 @@ function MarkEntryInternal() {
                         <h5>Course: &nbsp;</h5>
                         <h6 className="fixed">{course}</h6>
                     </div>
-                    <div className="select">
+                    {/* <div className="select">
                         <h5>Import Student Marks: &nbsp;</h5>
                         <input type="file" id="myfile" name="myfile"></input>
                     </div>
                     <div className="select">
                         <h5>Export Student List:&nbsp;&nbsp;&nbsp;</h5>
                         <button style={{ 'border': '1px solid black' }}>Export</button>
-                    </div>
+                    </div> */}
 
                     <div className="table">
                         <TableContainer component={Paper}>

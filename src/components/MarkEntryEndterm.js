@@ -21,7 +21,6 @@ function MarkEntryEndterm() {
     const course = new URLSearchParams(search).get('course');
     const session = new URLSearchParams(search).get('session');
 
-    let ser = 1;
     return (
         <div><Header />
             <div className="mark_entry_endterm">
@@ -35,14 +34,14 @@ function MarkEntryEndterm() {
                         <h5>Course: &nbsp;</h5>
                         <h6 className="fixed">{course}</h6>
                     </div>
-                    <h5>Import Student Marks: &nbsp;</h5>
+                    {/* <h5>Import Student Marks: &nbsp;</h5>
                     <div className="select">
                         <input type="file" id="myfile" name="myfile"></input>
                     </div>
                     <div className="select">
                         <h5>Export Student List:&nbsp;&nbsp;&nbsp;</h5>
                         <button style={{ 'border': '1px solid black' }}>Export</button>
-                    </div>
+                    </div> */}
 
                     <div className="table_area">
                         <div className="table">
@@ -71,6 +70,7 @@ function MarkEntryEndterm() {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
+                            <button className="submit-btn">Lock Automated Grade Range</button>
                         </div>
                         <div className="table">
                             <h5>Manual grade Range</h5>
@@ -99,7 +99,7 @@ function MarkEntryEndterm() {
                                 </Table>
                             </TableContainer>
 
-                            <button className="submit-btn">Save Manual Grade Range</button>
+                            <button className="submit-btn">Lock Manual Grade Range</button>
 
                         </div>
 
@@ -109,10 +109,9 @@ function MarkEntryEndterm() {
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Serial No.&nbsp;</TableCell>
                                         {
                                             Object.keys(students[0]).map((i) => (
-                                                <TableCell>{i}&nbsp;</TableCell>
+                                                <TableCell style={{ 'fontWeight': 'bold', 'fontFamily': 'Courier New', 'fontSize': '18px' }}>{i}&nbsp;</TableCell>
                                             ))
                                         }
                                     </TableRow>
@@ -123,7 +122,6 @@ function MarkEntryEndterm() {
                                             <TableRow
                                                 key={s}
                                             >
-                                                <TableCell>{ser++}</TableCell>
                                                 {
                                                     Object.values(s).map((i, ind) => (
                                                         ind >= 2 ? <TableCell><input type="number" step="0.01" placeholder={i} /></TableCell> : <TableCell>{i}</TableCell>
