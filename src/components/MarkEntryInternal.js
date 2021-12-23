@@ -10,16 +10,90 @@ import Paper from '@mui/material/Paper';
 import Header from "./Header.js";
 import Footer from "./Footer.js";
 import { useLocation } from "react-router-dom";
+import axios from 'axios';
+import Button from '@mui/material/Button';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 function MarkEntryInternal() {
-    const students = [{ 'Roll Number': '19UCS262', 'Name': 'Jaskaran Singh', 'ev1': '9', 'ev2': '8', 'midsem': '23' },
-    { 'Roll Number': '19UCS247', 'Name': 'Apurv mundhra', 'ev1': '10', 'ev2': '7', 'midsem': '29' }];
 
     const search = useLocation().search;
     const course = new URLSearchParams(search).get('course');
     const session = new URLSearchParams(search).get('session');
+    const id = new URLSearchParams(search).get('id');
 
-    let ser = 1;
+    const [marks, setMarks] = React.useState([]);
+    const [components, setComponents] = React.useState([]);
+
+    React.useEffect(() => {
+        const getMarks = async (s) => {
+            let options = {
+                url: `http://localhost:3000/api/teacher/courses/${id}/students/${s.RollNo}/getMarks`,
+                method: 'GET',
+                withCredentials: true,
+            }
+            let m = await axios(options);
+            m = m.data.data;
+
+            return { Roll: s.RollNo, Name: s.Name, comp: m };
+        }
+
+        const makeCall = async () => {
+            let options = {
+                url: `http://localhost:3000/api/teacher/courses/${id}/students`,
+                method: 'GET',
+                withCredentials: true,
+            }
+            let resp = await axios(options);
+            resp = resp.data.data;
+
+            let students = [];
+            for (let i = 0; i < resp.length; i++) {
+                let temp = await getMarks(resp[i]);
+                students.push(temp);
+            }
+
+            let compo = [];
+            students[0].comp.forEach((c) => compo.push(c));
+            setComponents(compo);
+
+            setMarks(students);
+        }
+
+        makeCall();
+
+    }, [id]);
+
+    const updateMarks = async (roll) => {
+        const arr = [];
+        for (let i = 0; i < components.length; i++) {
+            let val = document.getElementById(`${roll}${components[i].ExamName}`).value;
+            arr.push(val);
+        }
+        let i = 0;
+        for (i = 0; i < marks.length; i++) {
+            if (marks[i].Roll === roll) {
+                break;
+            }
+        }
+
+        for (let j = 0; j < marks[i].comp.length; j++) {
+            if (!arr[j]) {
+                arr[j] = marks[i].comp[j].MarksObtained;
+            }
+        }
+
+        const options = {
+            url: `http://localhost:3000/api/teacher/courses/${id}/students/${roll}/setMarks`,
+            method: 'POST',
+            withCredentials: true,
+            data: {
+                "marks": arr
+            }
+        }
+        let resp = await axios(options);
+        if (resp.data.status === 'success') alert("Mark Successfully Updated");
+    }
+
     return (
         <div>
             <Header />
@@ -38,47 +112,93 @@ function MarkEntryInternal() {
                         <h5>Import Student Marks: &nbsp;</h5>
                         <input type="file" id="myfile" name="myfile"></input>
                     </div>
-                    <div className="select">
-                        <h5>Export Student List:&nbsp;&nbsp;&nbsp;</h5>
-                        <button style={{ 'border': '1px solid black' }}>Export</button>
-                    </div> */}
+                    */}
 
                     <div className="table">
-                        <TableContainer component={Paper}>
+                        <TableContainer component={Paper} >
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Serial No.&nbsp;</TableCell>
+                                        <TableCell style={{ 'fontWeight': 'bold', 'fontFamily': 'Courier New', 'fontSize': '18px' }}>Roll&nbsp;</TableCell>
+                                        <TableCell style={{ 'fontWeight': 'bold', 'fontFamily': 'Courier New', 'fontSize': '18px' }}>Name&nbsp;</TableCell>
+
                                         {
-                                            Object.keys(students[0]).map((i) => (
-                                                <TableCell>{i}&nbsp;</TableCell>
+                                            components.map((i) => (
+                                                <TableCell style={{ 'fontWeight': 'bold', 'fontFamily': 'Courier New', 'fontSize': '18px' }}>{i.ExamName}&nbsp;</TableCell>
                                             ))
                                         }
+
+                                        <TableCell style={{ 'fontWeight': 'bold', 'fontFamily': 'Courier New', 'fontSize': '18px' }}>Action</TableCell>
+
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {
-                                        students.map((s) => (
+                                        marks.map((s) => (
                                             <TableRow
                                                 key={s}
                                             >
-                                                <TableCell>{ser++}</TableCell>
+                                                <TableCell>{s.Roll}</TableCell>
+                                                <TableCell>{s.Name}</TableCell>
                                                 {
-                                                    Object.values(s).map((i, ind) => (
-                                                        ind >= 2 ? <TableCell><input type="number" step="1" placeholder={i} /></TableCell> : <TableCell>{i}</TableCell>
+                                                    s.comp.map((c) => (
+                                                        <TableCell><input id={`${s.Roll}${c.ExamName}`} style={{ 'width': '40px' }} placeholder={c.MarksObtained}></input></TableCell>
                                                     ))
-
                                                 }
+                                                <TableCell><Button variant="outlined" onClick={(e) => updateMarks(s.Roll)}>Save</Button></TableCell>
                                             </TableRow>
-
                                         ))
                                     }
                                 </TableBody>
                             </Table>
                         </TableContainer>
+
+                        <TableContainer component={Paper} style={{ display: 'none' }}>
+                            <table sx={{ minWidth: 650 }} aria-label="simple table" id="emp">
+                                <thead>
+                                    <tr>
+                                        <th style={{ 'fontWeight': 'bold', 'fontFamily': 'Courier New', 'fontSize': '18px' }}>Roll&nbsp;</th>
+                                        <th style={{ 'fontWeight': 'bold', 'fontFamily': 'Courier New', 'fontSize': '18px' }}>Name&nbsp;</th>
+
+                                        {
+                                            components.map((i) => (
+                                                <th style={{ 'fontWeight': 'bold', 'fontFamily': 'Courier New', 'fontSize': '18px' }}>{i.ExamName}&nbsp;</th>
+                                            ))
+                                        }
+
+                                        <th style={{ 'fontWeight': 'bold', 'fontFamily': 'Courier New', 'fontSize': '18px' }}>Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        marks.map((s) => (
+                                            <tr
+                                                key={s}
+                                            >
+                                                <td>{s.Roll}</td>
+                                                <td>{s.Name}</td>
+                                                {
+                                                    s.comp.map((c) => (
+                                                        <td>{c.MarksObtained}</td>
+                                                    ))
+                                                }
+                                                <td><Button variant="outlined" onClick={(e) => updateMarks(s.Roll)}>Save</Button></td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
+                        </TableContainer>
                     </div>
                     <div className="select">
-                        <button style={{ 'border': '1px solid black' }}>Save Marks</button>
+                        <h5>Export Student List:&nbsp;&nbsp;&nbsp;</h5>
+                        <ReactHTMLTableToExcel
+                            className="btn btn-info"
+                            table="emp"
+                            filename="ReportExcel"
+                            sheet="Sheet"
+                            buttonText="Export excel" />
                     </div>
                 </div>
             </div>
