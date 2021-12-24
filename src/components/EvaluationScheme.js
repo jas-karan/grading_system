@@ -13,8 +13,13 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import Header from "./Header.js";
 import Footer from "./Footer.js";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
+import authContext from "../context/userContext";
+import { message, Popconfirm } from 'antd';
+import 'antd/dist/antd.css';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import url from './constants.js';
 
 function EvaluationScheme() {
     const [rows, setRows] = useState(0);
@@ -34,11 +39,14 @@ function EvaluationScheme() {
     const session = new URLSearchParams(search).get('session');
     const id = new URLSearchParams(search).get('id');
 
+    const { authenticated } = React.useContext(authContext);
+    const history = useNavigate();
+
     const [evalu, setEvalu] = React.useState([]);
 
     const makeCallAgain = async () => {
         const options = {
-            url: `http://localhost:3000/api/teacher/courses/${id}/EvalutaionScheme`,
+            url: `${url}/api/teacher/courses/${id}/EvalutaionScheme`,
             method: 'GET',
             withCredentials: true
         }
@@ -49,10 +57,13 @@ function EvaluationScheme() {
     }
 
     React.useEffect(() => {
+
+        if (!authenticated) history("/");
+
         const makeCall = async () => {
 
             const options = {
-                url: `http://localhost:3000/api/teacher/courses/${id}/EvalutaionScheme`,
+                url: `${url}/api/teacher/courses/${id}/EvalutaionScheme`,
                 method: 'GET',
                 withCredentials: true
             }
@@ -62,7 +73,7 @@ function EvaluationScheme() {
             setEvalu(resp);
         }
         makeCall();
-    }, [id])
+    }, [id, authenticated, history])
 
     const updateScheme = async (Examid) => {
         let prev = {};
@@ -83,7 +94,7 @@ function EvaluationScheme() {
         if (!W_) W_ = prev.Weightage;
 
         const options = {
-            url: `http://localhost:3000/api/teacher/courses/${id}/EvalutaionScheme`,
+            url: `${url}/api/teacher/courses/${id}/EvalutaionScheme`,
             method: 'PUT',
             withCredentials: true,
             data: {
@@ -94,7 +105,7 @@ function EvaluationScheme() {
             }
         }
         let resp = await axios(options);
-        if (resp.data.status === 'success') alert("Component Updated!");
+        if (resp.data.status === 'success') message.success("Component Updated!");
         makeCallAgain();
     }
 
@@ -102,9 +113,8 @@ function EvaluationScheme() {
         let name_ = document.getElementById(`${Examid}EN`).value;
         let TM_ = document.getElementById(`${Examid}TM`).value;
         let W_ = document.getElementById(`${Examid}W`).value
-        alert(name_ + " " + TM_ + " " + W_)
         const options = {
-            url: `http://localhost:3000/api/teacher/courses/${id}/EvalutaionScheme`,
+            url: `${url}/api/teacher/courses/${id}/EvalutaionScheme`,
             method: 'POST',
             withCredentials: true,
             data: {
@@ -114,14 +124,14 @@ function EvaluationScheme() {
             }
         }
         let resp = await axios(options);
-        if (resp.data.status === 'success') alert("Component Added!");
+        if (resp.data.status === 'success') message.success("New Component Added");
         deleteRow();
         makeCallAgain();
     }
 
     const deleteScheme = async (Examid) => {
         const options = {
-            url: `http://localhost:3000/api/teacher/courses/${id}/EvalutaionScheme`,
+            url: `${url}/api/teacher/courses/${id}/EvalutaionScheme`,
             method: 'Delete',
             withCredentials: true,
             data: {
@@ -129,7 +139,7 @@ function EvaluationScheme() {
             }
         }
         let resp = await axios(options);
-        if (resp.data.status === 'success') alert("Component Deleted Successfully!");
+        if (resp.data.status === 'success') message.success("Component Deleted Successfully!");
         makeCallAgain();
     }
 
@@ -176,7 +186,13 @@ function EvaluationScheme() {
                                                 <TableCell><input placeholder={e.TotalMarks} id={`${e.ExamId}TM`}></input></TableCell>
                                                 <TableCell><input placeholder={e.Weightage} id={`${e.ExamId}W`}></input></TableCell>
                                                 <TableCell><Button variant="outlined" onClick={() => updateScheme(e.ExamId)}>Save</Button></TableCell>
-                                                <TableCell><Button variant="outlined" onClick={() => deleteScheme(e.ExamId)}>Delete</Button></TableCell>
+                                                <TableCell><Popconfirm
+                                                    title="Are you sure to delete this component?"
+                                                    onConfirm={() => deleteScheme(e.ExamId)}
+                                                    okText="Yes"
+                                                    cancelText="No"
+                                                ><a href='#'>Delete</a></Popconfirm></TableCell>
+
 
                                             </TableRow>
 
@@ -211,6 +227,7 @@ function EvaluationScheme() {
                         </div>
 
                     </div>
+                    <Link to='/MenuInstructor/CourseListEvaluationScheme'><KeyboardBackspaceIcon />  Go back to Course Selection</Link>
                 </div >
             </div >
             <Footer />

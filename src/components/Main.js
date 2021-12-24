@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Button from '@mui/material/Button';
 import './css/Main.css';
-// import userContext from "../context/userContext";
 import { useNavigate } from "react-router-dom";
+import authContext from "../context/userContext";
+import { Button, message } from 'antd';
+import 'antd/dist/antd.css';
+import url from './constants.js';
 
 function Main() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    // const { teacherId, setTeacherId } = React.useContext(userContext);
+
     let history = useNavigate();
 
-    //make a api call and redirect to menuInstructor
+    const { setAuthenticated } = React.useContext(authContext);
 
     const login = async () => {
         if (verifyDetails()) {
-            alert(username + "\n" + password);
             const options = {
-                url: 'http://localhost:3000/api/login',
+                url: `${url}/api/login`,
                 method: 'POST',
                 withCredentials: true,
                 headers: {
@@ -31,8 +32,11 @@ function Main() {
             }
 
             const resp = await axios(options);
-            console.log(resp);
-            if (resp.data.status === 'success') history("/menuInstructor");
+            if (resp.data.status === 'success') {
+                setAuthenticated(true);
+                if (resp.data.data.type === 'Instructor') history("/successlogin");
+
+            }
             else alert("Wrong Username/password or both");
         }
     }
@@ -46,13 +50,9 @@ function Main() {
         else return 1;
     }
 
-
-
-
-
     return (
         <div>
-            <div className="outer"></div>
+            <div className="outer" ></div>
             <div className="main__login">
                 <div className="container">
                     <div className="row">
@@ -75,11 +75,11 @@ function Main() {
                                         </div>
 
                                         <div className="col-lg-12 loginbttm">
-                                            <div className="col-lg-6 login-btm login-text">
+                                            <div className="col-lg-6 login-btmm login-text">
                                                 Forget Password ?
                                             </div>
                                             <div className="col-lg-6 login-btm ">
-                                                <Button onClick={login} style={{ border: '1px solid #1A2226', padding: '5px 5px', fontWeight: "bold", backgroundColor: '#0DB8DE' }}>Login</Button>
+                                                <Button onClick={login} style={{ color: 'black', border: '1px solid #1A2226', padding: '5px 5px', fontWeight: "bold", backgroundColor: '#0DB8DE' }}>Login</Button>
                                             </div>
                                         </div>
                                     </form>

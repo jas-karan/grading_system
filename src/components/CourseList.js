@@ -10,8 +10,10 @@ import Paper from '@mui/material/Paper';
 import Button from "@mui/material/Button";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import authContext from "../context/userContext";
+import { Alert } from 'antd';
 
 function CourseList({ list, page }) {
 
@@ -19,8 +21,15 @@ function CourseList({ list, page }) {
     const [data, setData] = useState([]);
     const [sessions, setSessions] = useState([]);
     const [session, setSession] = useState();
+
+    const { authenticated } = React.useContext(authContext);
+    const history = useNavigate();
+
     //make a api call and get course list of loggedin teacher
     useEffect(() => {
+
+        if (!authenticated) history("/");
+        window.scrollTo(0, 0)
         const makeCall = async () => {
             const options = {
                 url: 'http://localhost:3000/api/teacher/courses?courseType=NC',
@@ -37,7 +46,7 @@ function CourseList({ list, page }) {
             console.log(resp.data);
         }
         makeCall();
-    }, []);
+    }, [authenticated, history]);
 
     const findCourses = (e) => {
         setSession(e);
@@ -54,6 +63,7 @@ function CourseList({ list, page }) {
         <div>
             <Header />
             <div className="courseList">
+                <Alert message="Upon selecting a Session, the Course List of the selected session will appear. " type="info" showIcon />
                 <h4 className="heading">{list === "EvaluationScheme" ? "Set" : "Mark Entry - "} {list}</h4>
                 <div className="main">
                     <div className="select">

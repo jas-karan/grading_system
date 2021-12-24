@@ -3,9 +3,18 @@ import Button from "@mui/material/Button";
 import "./css/MenuInstructor.css"
 import Header from "./Header.js";
 import Footer from "./Footer.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import authContext from "../context/userContext";
 
 function MenuInstructor() {
+
+    const { authenticated } = React.useContext(authContext);
+    const history = useNavigate();
+
+    React.useEffect(() => {
+        console.log(authenticated)
+        if (!authenticated) history("/");
+    }, [authenticated, history])
 
     return (
         <div>

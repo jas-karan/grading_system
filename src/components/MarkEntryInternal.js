@@ -9,10 +9,15 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Header from "./Header.js";
 import Footer from "./Footer.js";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import authContext from "../context/userContext";
+import { message } from 'antd';
+import 'antd/dist/antd.css';
+import url from './constants.js';
 
 function MarkEntryInternal() {
 
@@ -24,10 +29,16 @@ function MarkEntryInternal() {
     const [marks, setMarks] = React.useState([]);
     const [components, setComponents] = React.useState([]);
 
+    const { authenticated } = React.useContext(authContext);
+    const history = useNavigate();
+
     React.useEffect(() => {
+
+        if (!authenticated) history("/");
+
         const getMarks = async (s) => {
             let options = {
-                url: `http://localhost:3000/api/teacher/courses/${id}/students/${s.RollNo}/getMarks`,
+                url: `${url}/api/teacher/courses/${id}/students/${s.RollNo}/getMarks`,
                 method: 'GET',
                 withCredentials: true,
             }
@@ -39,7 +50,7 @@ function MarkEntryInternal() {
 
         const makeCall = async () => {
             let options = {
-                url: `http://localhost:3000/api/teacher/courses/${id}/students`,
+                url: `${url}/api/teacher/courses/${id}/students`,
                 method: 'GET',
                 withCredentials: true,
             }
@@ -52,16 +63,17 @@ function MarkEntryInternal() {
                 students.push(temp);
             }
 
-            let compo = [];
-            students[0].comp.forEach((c) => compo.push(c));
-            setComponents(compo);
-
+            if (students.length) {
+                let compo = [];
+                students[0].comp.forEach((c) => compo.push(c));
+                setComponents(compo);
+            }
             setMarks(students);
         }
 
         makeCall();
 
-    }, [id]);
+    }, [id, authenticated, history]);
 
     const updateMarks = async (roll) => {
         const arr = [];
@@ -83,7 +95,7 @@ function MarkEntryInternal() {
         }
 
         const options = {
-            url: `http://localhost:3000/api/teacher/courses/${id}/students/${roll}/setMarks`,
+            url: `${url}/api/teacher/courses/${id}/students/${roll}/setMarks`,
             method: 'POST',
             withCredentials: true,
             data: {
@@ -91,7 +103,7 @@ function MarkEntryInternal() {
             }
         }
         let resp = await axios(options);
-        if (resp.data.status === 'success') alert("Mark Successfully Updated");
+        if (resp.data.status === 'success') message.success("Mark Successfully Updated");
     }
 
     return (
@@ -193,13 +205,19 @@ function MarkEntryInternal() {
                     </div>
                     <div className="select">
                         <h5>Export Student List:&nbsp;&nbsp;&nbsp;</h5>
-                        <ReactHTMLTableToExcel
-                            className="btn btn-info"
-                            table="emp"
-                            filename="ReportExcel"
-                            sheet="Sheet"
-                            buttonText="Export excel" />
+                        <button onClick={() => {
+                            message.info("Downloading...", 0.6);
+                            setTimeout(() => message.success("File Downloaded!", 1), 1000)
+                        }} style={{ 'border': 'none' }}>
+                            <ReactHTMLTableToExcel
+                                className="btn btn-info"
+                                table="emp"
+                                filename={`Marks_${id}`}
+                                sheet="Sheet"
+                                buttonText="Export excel" />
+                        </button>
                     </div>
+                    <Link to='/MenuInstructor/CourseListInternal'><KeyboardBackspaceIcon />  Go back to Course Selection</Link>
                 </div>
             </div>
             <Footer />
