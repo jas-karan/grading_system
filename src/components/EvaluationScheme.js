@@ -191,7 +191,7 @@ function EvaluationScheme() {
                                                     onConfirm={() => deleteScheme(e.ExamId)}
                                                     okText="Yes"
                                                     cancelText="No"
-                                                ><a href='#'>Delete</a></Popconfirm></TableCell>
+                                                ><Button>Delete</Button></Popconfirm></TableCell>
 
 
                                             </TableRow>

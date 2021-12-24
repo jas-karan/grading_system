@@ -35,9 +35,8 @@ function Main() {
             if (resp.data.status === 'success') {
                 setAuthenticated(true);
                 if (resp.data.data.type === 'Instructor') history("/successlogin");
-
             }
-            else alert("Wrong Username/password or both");
+            else message.error("Wrong Username/password or both");
         }
     }
 
