@@ -29,7 +29,10 @@ function CourseList({ list, page }) {
     useEffect(() => {
         const courseType = list === 'BTP' ? 'BTP' : 'NC';
         if (!authenticated) history("/");
-        window.scrollTo(0, 0)
+
+        window.scrollTo(0, 0);
+
+
         const makeCall = async () => {
             const options = {
                 url: `http://localhost:3000/api/teacher/courses?courseType=${courseType}`,
@@ -45,6 +48,8 @@ function CourseList({ list, page }) {
             setSessions(unique_s);
             console.log(resp.data);
         }
+
+
         makeCall();
     }, [authenticated, history, list]);
 

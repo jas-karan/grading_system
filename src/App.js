@@ -15,6 +15,7 @@ import authContext from "./context/userContext";
 
 function App() {
   const [authenticated, setAuthenticated] = React.useState(false);
+
   return (
     <authContext.Provider value={{ authenticated, setAuthenticated }}>
       <div className="App" style={{ display: 'flex' }}>

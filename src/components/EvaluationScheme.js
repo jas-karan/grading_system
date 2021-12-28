@@ -182,7 +182,6 @@ function EvaluationScheme() {
                                             >
                                                 <TableCell><input value={e.ExamId} readOnly></input></TableCell>
                                                 <TableCell><input placeholder={e.ExamName} id={`${e.ExamId}EN`}></input></TableCell>
-
                                                 <TableCell><input placeholder={e.TotalMarks} id={`${e.ExamId}TM`}></input></TableCell>
                                                 <TableCell><input placeholder={e.Weightage} id={`${e.ExamId}W`}></input></TableCell>
                                                 <TableCell><Button variant="outlined" onClick={() => updateScheme(e.ExamId)}>Save</Button></TableCell>

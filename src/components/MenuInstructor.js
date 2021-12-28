@@ -12,8 +12,10 @@ function MenuInstructor() {
     const history = useNavigate();
 
     React.useEffect(() => {
+
         console.log(authenticated)
         if (!authenticated) history("/");
+
     }, [authenticated, history])
 
     return (
